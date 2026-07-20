@@ -12,6 +12,15 @@ The goal is to explore low-level Windows development, graphics rendering, input 
 
 This is a modern implementation of the classic Snake game.
 
+## Screenshots
+
+### Main Menu
+<img width="600" height="630" alt="20260720-0517-04 5567350" src="https://github.com/user-attachments/assets/e2087251-789c-4a74-b0c2-659702706310" />
+
+### Gameplay
+<img width="602" height="682" alt="20260720-0519-29 0391815" src="https://github.com/user-attachments/assets/bca193dc-9333-4e3d-bc29-b4010507c1c0" />
+
+
 Features:
 
 - Classic Snake gameplay
