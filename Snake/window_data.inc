@@ -26,6 +26,7 @@ WS_CAPTION          equ 00C0000h
 WS_THICKFRAME       equ 0004000h
 WS_SYSMENU          equ 0008000h
 WS_MINIMIZEBOX      equ 0002000h
+WS_MAXIMIZEBOX      equ 0001000h
 
 WM_CREATE           equ 0001h
 WM_DESTROY          equ 0002h
@@ -34,6 +35,40 @@ WM_ERASEBKGND       equ 0014h
 WM_KEYDOWN          equ 0100h
 WM_TIMER            equ 0113h
 WM_PAINT            equ 000Fh
+WM_NCHITTEST        equ 0084h
+
+HTERROR             equ -2
+HTTRANSPARENT       equ -1
+HTNOWHERE           equ 0
+HTCLIENT            equ 1
+HTCAPTION           equ 2
+HTSYSMENU           equ 3
+HTGROWBOX           equ 4
+HTSIZE              equ HTGROWBOX
+HTMENU              equ 5
+HTHSCROLL           equ 6
+HTVSCROLL           equ 7
+HTMINBUTTON         equ 8
+HTMAXBUTTON         equ 9
+HTLEFT              equ 10
+HTRIGHT             equ 11
+HTTOP               equ 12
+HTTOPLEFT           equ 13
+HTTOPRIGHT          equ 14
+HTBOTTOM            equ 15
+HTBOTTOMLEFT        equ 16
+HTBOTTOMRIGHT       equ 17
+HTBORDER            equ 18
+HTREDUCE            equ HTMINBUTTON
+HTZOOM              equ HTMAXBUTTON
+HTSIZEFIRST         equ HTLEFT
+HTSIZELAST          equ HTBOTTOMRIGHT
+HTOBJECT            equ 19
+HTCLOSE             equ 20
+HTHELP              equ 21
+
+
+GWL_STYLE           equ -16
 
 SW_SHOW             equ 0005h
 

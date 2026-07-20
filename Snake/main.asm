@@ -227,9 +227,9 @@ main PROC
 
     mov mainHWND, rax
 
-     ; ----------------------------------------
+    ;========================================
     ; Show Window
-    ; ----------------------------------------
+    ;========================================
 
     mov rcx, mainHWND
     mov rdx, SW_SHOW
@@ -287,7 +287,10 @@ main ENDP
 ; =========================================================
 
 MainWndProc PROC
-     mov mainHWND, rcx
+    mov mainHWND, rcx
+
+    cmp edx, WM_NCHITTEST
+    je HitTest
 
     cmp edx, WM_DESTROY
     je DestroyWindow
@@ -312,6 +315,42 @@ MainWndProc PROC
     add rsp, 28h
 
     ret
+
+    HitTest:
+
+    sub rsp,28h
+        call DefWindowProcW
+    add rsp,28h
+
+    cmp eax, HTLEFT
+    je BlockResize
+
+    cmp eax, HTRIGHT
+    je BlockResize
+
+    cmp eax, HTTOP
+    je BlockResize
+
+    cmp eax, HTBOTTOM
+    je BlockResize
+
+    cmp eax, HTTOPLEFT
+    je BlockResize
+
+    cmp eax, HTTOPRIGHT
+    je BlockResize
+
+    cmp eax, HTBOTTOMLEFT
+    je BlockResize
+
+    cmp eax, HTBOTTOMRIGHT
+    je BlockResize
+
+    ret
+
+    BlockResize:
+        mov eax, HTCLIENT
+        ret
 
      CreateWindow:
 
