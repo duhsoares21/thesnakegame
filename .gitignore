@@ -1,0 +1,22 @@
+# Visual Studio user files
+*.user
+
+# Visual Studio generated files
+*.suo
+*.user
+*.filters
+
+# Build output
+x64/
+Debug/
+Release/
+
+# Intermediate files
+*.obj
+*.pdb
+*.ilk
+*.ipch
+*.tlog
+
+# Visual Studio cache
+.vs/
