@@ -4,7 +4,6 @@
 ; =========================================================
 
 INCLUDE basic_data.inc
-INCLUDE game_data.inc
 INCLUDE snake_data.inc
 INCLUDE snake_state_data.inc
 INCLUDE hud_data.inc
@@ -17,7 +16,6 @@ EXTERN SpawnFood: PROC
 EXTERN DrawRectangle: PROC
 EXTERN GetSnakeState: PROC
 
-EXTERN lockInput: QWORD
 EXTERN ClientRect: RECT
 
 .data
@@ -231,8 +229,6 @@ LoopSnake:
     jmp LoopSnake
 
 Finish:
-
-    mov lockInput, 0
 
     pop r15
     pop r14

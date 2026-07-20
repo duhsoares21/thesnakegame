@@ -12,7 +12,6 @@ INCLUDELIB kernel32.lib
 INCLUDE basic_data.inc
 INCLUDE window_data.inc
 INCLUDE render_data.inc
-INCLUDE game_data.inc
 INCLUDE snake_data.inc
 INCLUDE snake_state_data.inc
 INCLUDE game_state_data.inc
@@ -37,7 +36,7 @@ EXTERN KillTimer:PROC
 EXTERN InvalidateRect:PROC
 EXTERN UpdateWindow:PROC
 EXTERN GetClientRect: PROC
-EXTERN PostQuitMessage: PROC
+EXTERN DestroyWindow:PROC
 
 EXTERN BeginPaint: PROC
 EXTERN EndPaint: PROC
@@ -343,8 +342,8 @@ WndProc PROC
     cmp edx, WM_NCHITTEST
     je HitTest
 
-    cmp edx, WM_DESTROY
-    je DestroyWindow
+    cmp edx, WM_CLOSE
+    je CloseGame
 
     cmp edx, WM_CREATE
     je CreateWindow
@@ -423,7 +422,7 @@ WndProc PROC
         add rsp,28h
 
         mov rcx, gameHWND
-        mov rdx, 2
+        mov rdx, GAME_INPUT_TIMER_ID
         mov r8, timerValue
         xor r9, r9
 
@@ -435,6 +434,7 @@ WndProc PROC
         ret
 
     GameLoop:
+
         mov rcx, 2
         mov rdx, r8
 
@@ -465,6 +465,11 @@ WndProc PROC
             call HandleSnakeState
             mov elapsedTime, 0  
         add rsp, 28h
+
+        ;sub rsp, 28h
+            ;call HandleGameState
+            ;mov elapsedTime, 0
+        ;add rsp, 28h
 
         Continue:
             xor rax, rax
@@ -708,11 +713,11 @@ WndProc PROC
         xor rax, rax
         ret
 
-    DestroyWindow: 
+    CloseGame: 
 
         mov rcx, gameHWND
 
-        mov rdx, 2
+        mov rdx, GAME_INPUT_TIMER_ID
         sub rsp, 28h
             call KillTimer
         add rsp, 28h
@@ -749,12 +754,8 @@ WndProc PROC
         add rsp, 28h
 
         sub rsp, 28h
-            mov rcx, GAME_STATE_MENU
-            call SetGameState
-        add rsp, 28h
-
-        sub rsp, 28h
-            call HandleGameState
+            mov rcx, gameHWND
+            call DestroyWindow
         add rsp, 28h
 
         xor eax, eax

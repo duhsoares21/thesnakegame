@@ -12,7 +12,6 @@ INCLUDELIB gdi32.lib
 INCLUDELIB kernel32.lib
 
 INCLUDE basic_data.inc
-INCLUDE game_data.inc
 INCLUDE render_data.inc
 
 ;========================================

@@ -20,6 +20,7 @@ EXTERN UpdateWindow:PROC
 EXTERN TranslateMessage:PROC
 EXTERN ShowWindow:PROC
 EXTERN SetTimer:PROC
+EXTERN KillTimer:PROC
 EXTERN RegisterClassExW:PROC
 EXTERN GetModuleHandleW:PROC
 EXTERN GetMessageW:PROC
@@ -79,7 +80,7 @@ TopHalfRectangle RECT <0,0,600,285>
 BottomHalfRectangle RECT <0,285,600,600>
 
 PUBLIC timerValue
-timerValue QWORD 16
+timerValue QWORD INPUT_FREQUENCY_MS
 
 Paint PAINTSTRUCT <>
 WndClass db SIZEOF WNDCLASSEXW dup(0)
@@ -94,6 +95,8 @@ hMainDeviceContext HDC 0
 hDeviceContext HDC 0
 
 isClassRegistered QWORD 0
+
+elapsedTime QWORD 0
 
 mainRender RENDER_CONTEXT <0,0,0,0,600,600>
 
@@ -272,7 +275,6 @@ main PROC
         jmp MessageLoop
 
     ExitProgram:
-
         xor ecx, ecx
         sub rsp, 28h
             call ExitProcess
@@ -293,7 +295,7 @@ MainWndProc PROC
     je HitTest
 
     cmp edx, WM_DESTROY
-    je DestroyWindow
+    je CloseMain
 
     cmp edx, WM_CREATE
     je CreateWindow
@@ -355,13 +357,23 @@ MainWndProc PROC
      CreateWindow:
 
         mov rcx, mainHWND
-        mov rdx, 1            ; Timer ID
-        mov r8d, 500          ; 500 ms
+        mov rdx, BLINK_TIMER_ID
+        mov r8d, BLINK_FREQUENCY_MS          
         xor r9, r9
 
         sub rsp,28h
             call SetTimer
         add rsp,28h
+
+        mov rcx, mainHWND
+        mov rdx, MAIN_INPUT_TIMER_ID
+        mov r8d, INPUT_FREQUENCY_MS
+        xor r9, r9
+
+        sub rsp,28h
+            call SetTimer
+        add rsp,28h
+
         
         ;=======================================================
         ; FONT CREATION
@@ -429,7 +441,7 @@ MainWndProc PROC
 
         xor rax, rax
         ret
-     DestroyWindow:
+     CloseMain:
         mov rcx, MenuTitleFont
 
         sub rsp, 28h
@@ -442,6 +454,20 @@ MainWndProc PROC
             call DeleteObject
         add rsp, 28h
 
+        mov rcx, mainHWND
+        mov rdx, BLINK_TIMER_ID
+        
+        sub rsp, 28h
+            call KillTimer
+        add rsp, 28h
+
+        mov rcx, mainHWND
+        mov rdx, MAIN_INPUT_TIMER_ID
+        
+        sub rsp, 28h
+            call KillTimer
+        add rsp, 28h
+
         xor rcx, rcx
         sub rsp, 28h
             call PostQuitMessage
@@ -450,15 +476,37 @@ MainWndProc PROC
         xor eax, eax
         ret
      GameLoop:
-        xor BlinkState, 1
+        cmp r8, BLINK_TIMER_ID
+        je BlinkTick
 
-        mov rcx, mainHWND
-        xor rdx, rdx
-        xor r8, r8
+        cmp r8, MAIN_INPUT_TIMER_ID
+        je InputTick
 
-        sub rsp,28h
-            call InvalidateRect
-        add rsp,28h
+        ret
+
+        BlinkTick:
+
+            xor BlinkState, 1
+
+            mov rcx, mainHWND
+            xor rdx, rdx
+            xor r8, r8
+
+            sub rsp,28h
+                call InvalidateRect
+            add rsp,28h
+
+            xor eax, eax
+
+        InputTick:
+            mov rcx, 2
+            mov rdx, r8
+
+            sub rsp, 28h
+                call HandleInput
+            add rsp, 28h
+
+            xor eax, eax
 
         xor eax,eax
         ret

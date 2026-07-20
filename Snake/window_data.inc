@@ -30,6 +30,7 @@ WS_MAXIMIZEBOX      equ 0001000h
 
 WM_CREATE           equ 0001h
 WM_DESTROY          equ 0002h
+WM_CLOSE            equ 0010h
 WM_QUIT             equ 0012h
 WM_ERASEBKGND       equ 0014h
 WM_KEYDOWN          equ 0100h
@@ -70,6 +71,7 @@ HTHELP              equ 21
 
 GWL_STYLE           equ -16
 
+SW_HIDE             equ 0
 SW_SHOW             equ 0005h
 
 ; =========================================================

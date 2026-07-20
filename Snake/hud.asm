@@ -9,7 +9,6 @@
 INCLUDELIB user32.lib
 
 INCLUDE basic_data.inc
-INCLUDE game_data.inc
 INCLUDE hud_data.inc
 
 ;========================================

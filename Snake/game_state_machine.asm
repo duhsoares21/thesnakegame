@@ -5,6 +5,7 @@
 INCLUDE basic_data.inc
 INCLUDE game_state_data.inc
 INCLUDE input_data.inc
+INCLUDE window_data.inc
 
 ;========================================
 ;EXTERNS
@@ -19,6 +20,8 @@ EXTERN main:PROC
 EXTERN Game:PROC
 EXTERN SetTimer: PROC
 EXTERN KillTimer: PROC
+EXTERN ShowWindow:PROC
+EXTERN PostMessageW:PROC
 EXTERN DestroyWindow:PROC
 
 ;========================================
@@ -49,6 +52,7 @@ SetGameState ENDP
 HandleGameState PROC
 
 	mov r8, CurrentKeyPress
+    mov CurrentKeyPress, 0
 
     cmp r8, 0
     je Return
@@ -60,20 +64,28 @@ HandleGameState PROC
 	je PlayingLabel
 
 	MenuLabel:
+        test r8d, XINPUT_GAMEPAD_BACK
+        jnz QuitMenu
 
         cmp isMainMenuClosed, 1
         je OpenMenu 
 
-		cmp r8, VK_RETURN
-		jne Return
+        cmp r8, VK_RETURN
+        je StartGame
+
+        test r8d, XINPUT_GAMEPAD_START
+        jnz StartGame
+
+        jmp Return
 
 		StartGame: 
 
-            ;mov rcx, mainHWND
-            
-            ;sub rsp, 28h
-                ;call DestroyWindow
-            ;add rsp, 28h
+            mov rcx, mainHWND
+            mov rdx, SW_HIDE
+
+            sub rsp, 28h
+                call ShowWindow
+            add rsp, 28h
 
             mov isMainMenuClosed, 1
 
@@ -90,10 +102,23 @@ HandleGameState PROC
 
           OpenMenu: 
             mov isMainMenuClosed, 0
-            ;sub rsp, 28h
-                ;call main
-            ;add rsp, 28h
+            
+            mov rcx, mainHWND
+            mov rdx, SW_SHOW
 
+            sub rsp, 28h
+                call ShowWindow
+            add rsp, 28h
+
+            jmp Return
+
+          QuitMenu:
+            mov rcx, mainHWND
+
+            sub rsp,28h
+                call DestroyWindow
+            add rsp,28h
+                
             jmp Return
 
 	PlayingLabel:
@@ -110,17 +135,26 @@ HandleGameState PROC
         cmp r8, VK_DOWN
         je MovePlayerDown
 
-        cmp r8, XINPUT_GAMEPAD_DPAD_RIGHT
-        je MovePlayerRight
+        cmp r8, VK_ESCAPE
+        je PauseGame
 
-        cmp r8, XINPUT_GAMEPAD_DPAD_LEFT
-        je MovePlayerLeft
+        test r8, XINPUT_GAMEPAD_DPAD_RIGHT
+        jnz MovePlayerRight
 
-        cmp r8, XINPUT_GAMEPAD_DPAD_UP
-        je MovePlayerUp
+        test r8, XINPUT_GAMEPAD_DPAD_LEFT
+        jnz MovePlayerLeft
 
-        cmp r8, XINPUT_GAMEPAD_DPAD_DOWN
-        je MovePlayerDown
+        test r8, XINPUT_GAMEPAD_DPAD_UP
+        jnz MovePlayerUp
+
+        test r8, XINPUT_GAMEPAD_DPAD_DOWN
+        jnz MovePlayerDown
+
+        test r8d, XINPUT_GAMEPAD_START
+        jnz PauseGame
+
+        test r8d, XINPUT_GAMEPAD_BACK
+        jnz QuitGame
 
 		MovePlayerRight:
             sub rsp, 28h
@@ -156,7 +190,7 @@ HandleGameState PROC
                 mov paused, 0
 
                 mov rcx, gameHWND
-                mov rdx, 1
+                mov rdx, GAME_INPUT_TIMER_ID
                 mov r8, timerValue
                 xor r9, r9
 
@@ -164,19 +198,40 @@ HandleGameState PROC
                     call SetTimer
                 add rsp, 28h
 
-                ret
+                jmp return
 
             DoPause:
                 mov paused, 1
 
                 mov rcx, gameHWND
-                mov rdx, 1
+                mov rdx, GAME_INPUT_TIMER_ID
                 sub rsp, 28h
                     call KillTimer
                 add rsp, 28h
 
-                ret
+                jmp return
 
+            QuitGame:
+                sub rsp, 28h
+                    mov rcx, GAME_STATE_MENU
+                    call SetGameState
+                add rsp, 28h
+
+                mov CurrentKeyPress, 0
+
+                mov rcx, gameHWND
+                mov edx, WM_CLOSE
+                xor r8d, r8d
+                xor r9d, r9d
+
+                sub rsp,28h
+                    call PostMessageW
+                add rsp,28h
+
+                mov r8, CurrentKeyPress
+
+                jmp MenuLabel
+                
             Return:
                 ret
     

@@ -9,7 +9,6 @@
 INCLUDELIB xinput.lib
 INCLUDELIB kernel32.lib 
 
-INCLUDE game_data.inc
 INCLUDE input_data.inc
 
 ;========================================
@@ -31,10 +30,9 @@ CurrentInputType QWORD 1
 PUBLIC CurrentKeyPress
 CurrentKeyPress QWORD 0
 
-ControllerState XINPUT_STATE <>
+PrevButtons QWORD 0
 
-PUBLIC lockInput
-lockInput QWORD 0
+ControllerState XINPUT_STATE <>
 
 .code
 
@@ -95,25 +93,45 @@ HandleInput ENDP
 ;========================================================
 
 ControllerInput PROC
-    mov rax, lockInput
+    ;============================
+    ; BLOCK DOUBLE FIRING INPUT
+    ;============================
+    
+    mov r8, rcx                  
 
-    cmp rax, 1
-    je Return
+    mov r9, PrevButtons
+    mov rax, r8
+    xor rax, r9
+    and rax, r8                  
+    mov PrevButtons, r8
 
-    mov r8, rcx
+    test rax, rax
+    jz Return
+
+    ;============================
+    ; HANDLE INPUT
+    ;============================
+
+    mov r8, rax                     
     mov CurrentInputType, 2
     
-    cmp r8d, XINPUT_GAMEPAD_DPAD_RIGHT
-    je HandleGameStateLabel
+    test r8d, XINPUT_GAMEPAD_DPAD_RIGHT
+    jnz HandleGameStateLabel
 
-    cmp r8d, XINPUT_GAMEPAD_DPAD_LEFT
-    je HandleGameStateLabel
+    test r8d, XINPUT_GAMEPAD_DPAD_LEFT
+    jnz HandleGameStateLabel
 
-    cmp r8d, XINPUT_GAMEPAD_DPAD_UP
-    je HandleGameStateLabel
+    test r8d, XINPUT_GAMEPAD_DPAD_UP
+    jnz HandleGameStateLabel
 
-    cmp r8d, XINPUT_GAMEPAD_DPAD_DOWN
-    je HandleGameStateLabel
+    test r8d, XINPUT_GAMEPAD_DPAD_DOWN
+    jnz HandleGameStateLabel
+
+    test r8d, XINPUT_GAMEPAD_START
+    jnz HandleGameStateLabel
+
+    test r8d, XINPUT_GAMEPAD_BACK
+    jnz HandleGameStateLabel
 
     Return:
         ret
@@ -127,11 +145,6 @@ ControllerInput ENDP
 ;========================================================
 
 KeyboardInput PROC
-    mov rax, lockInput
-
-    cmp rax, 1
-    je Return
-
     mov r8, rcx
     mov CurrentInputType, 1
     
@@ -169,7 +182,6 @@ HandleGameStateLabel:
     
     mov rax, CurrentInputType
     mov InputType, rax
-    mov lockInput, 1
     ret
 
 EndInput:
