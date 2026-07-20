@@ -168,7 +168,6 @@
     <None Include="game_state_data.inc" />
     <None Include="hud_data.inc" />
     <None Include="input_data.inc" />
-    <None Include="game_data.inc" />
     <MASM Include="main.asm">
       <FileType>Document</FileType>
     </MASM>

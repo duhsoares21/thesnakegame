@@ -60,6 +60,7 @@ EXTERN GetFoodCount: PROC
 EXTERN GetSnakeSpeed: PROC
 
 EXTERN HandleGameState: PROC
+EXTERN CallMenu:PROC
 
 EXTERN snakeCounter: QWORD
 EXTERN SnakeSize: QWORD
@@ -81,6 +82,7 @@ EXTERN SpeedText: QWORD
 EXTERN FoodCountText: QWORD
 
 EXTERN InputType: QWORD
+EXTERN CurrentKeyPress: QWORD
 
 EXTERN timerValue: QWORD
 
@@ -753,9 +755,22 @@ WndProc PROC
             call SetupSnake
         add rsp, 28h
 
+        mov CurrentKeyPress, 0
+
         sub rsp, 28h
             mov rcx, gameHWND
             call DestroyWindow
+        add rsp, 28h
+
+        sub rsp, 28h
+            mov rcx, GAME_STATE_MENU
+            call SetGameState
+        add rsp, 28h
+
+        mov r8, CurrentKeyPress
+
+        sub rsp, 28h
+            call CallMenu
         add rsp, 28h
 
         xor eax, eax
