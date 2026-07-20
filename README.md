@@ -20,7 +20,7 @@ The goal is to explore low-level Windows development, graphics rendering, input 
 | Windows 7 x64 | ✅ Supported |
 | Windows XP x64 | ✅ Supported |
 
-- If you download release 1.1 or below you need to install DirectX June 2010; From version 1.2 onwards XInput is bundled on a zip file with the game.
+- DirectX June 2010 is required to play the game; From version 1.2 onwards the DirectX will be available as a separate download on the release.
 - Windows 8 and newer officialy supports Xbox One and Xbox Series X|S Controllers; Windows 7 and older officialy supports Xbox 360 Controllers, but drivers might be required;
 
 The game targets the native Windows x64 environment.
