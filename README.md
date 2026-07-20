@@ -19,7 +19,7 @@ The goal is to explore low-level Windows development, graphics rendering, input 
 | Windows Vista x64 | ✅ Supported |
 | Windows 7 x64 | ✅ Supported |
 | Windows XP x64 | ✅ Supported |
-| Windows x86 | ❌ Not supported |
+| Any 32 bits Windows | ❌ Not supported |
 
 - If you download release 1.1 or below you need to install DirectX June 2010; From version 1.2 onwards XInput is bundled on a zip file with the game.
 - Windows 8 and newer officialy supports Xbox One and Xbox Series X|S Controllers; Windows 7 and older officialy supports Xbox 360 Controllers, but drivers might be required;
