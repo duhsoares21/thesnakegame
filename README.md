@@ -139,8 +139,8 @@ The executable is standalone.
 | Windows 10 x64 | ✅ Supported |
 | Windows 11 x64 | ✅ Supported |
 | Windows 8 x64 | ⚠️ Not tested but should work |
-| Windows Vista x64 | ⚠️ Not tested but should work |
-| Windows 7 x64 | ⚠️ Not tested but should work |
+| Windows Vista x64 | ✅ Supported |
+| Windows 7 x64 | ✅ Supported |
 | Windows XP x64 | ✅ Supported |
 | Windows x86 | ❌ Not supported |
 
