@@ -144,6 +144,9 @@ The executable is standalone.
 | Windows XP x64 | ✅ Supported |
 | Windows x86 | ❌ Not supported |
 
+- For Windows 7 and older you will need DirectX June 2010 installed.
+- Windows 8 and newer supports Xbox One and Xbox Series X|S Controllers out of the box; Windows 7 and older supports Xbox 360 Controllers, but drivers might be required;
+
 The game targets the native Windows x64 environment.
 
 ---
