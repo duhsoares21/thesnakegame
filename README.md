@@ -7,6 +7,26 @@ This project is a learning and experimentation project focused on building a com
 The goal is to explore low-level Windows development, graphics rendering, input handling, memory management, and game architecture using Assembly language.
 
 ---
+## Compatibility
+
+### Supported
+
+| Platform | Status |
+| --- | --- |
+| Windows 11 x64 | ✅ Supported |
+| Windows 10 x64 | ✅ Supported |
+| Windows 8 x64 | ✅ Supported |
+| Windows Vista x64 | ✅ Supported |
+| Windows 7 x64 | ✅ Supported |
+| Windows XP x64 | ✅ Supported |
+| Windows x86 | ❌ Not supported |
+
+- If you download release 1.1 or below you need to install DirectX June 2010; From version 1.2 onwards XInput is bundled on a zip file with the game.
+- Windows 8 and newer officialy supports Xbox One and Xbox Series X|S Controllers; Windows 7 and older officialy supports Xbox 360 Controllers, but drivers might be required;
+
+The game targets the native Windows x64 environment.
+
+---
 
 ## About The Game
 
@@ -19,7 +39,6 @@ This is a modern implementation of the classic Snake game.
 
 ### Gameplay
 <img width="602" height="682" alt="20260720-0519-29 0391815" src="https://github.com/user-attachments/assets/bca193dc-9333-4e3d-bc29-b4010507c1c0" />
-
 
 Features:
 
@@ -127,27 +146,6 @@ SnakeGame
 
 No installation is required.
 The executable is standalone.
-
----
-
-## Compatibility
-
-### Supported
-
-| Platform | Status |
-| --- | --- |
-| Windows 11 x64 | ✅ Supported |
-| Windows 10 x64 | ✅ Supported |
-| Windows 8 x64 | ⚠️ Not tested but should work |
-| Windows Vista x64 | ✅ Supported |
-| Windows 7 x64 | ✅ Supported |
-| Windows XP x64 | ✅ Supported |
-| Windows x86 | ❌ Not supported |
-
-- For Windows 7 and older you will need DirectX June 2010 installed.
-- Windows 8 and newer supports Xbox One and Xbox Series X|S Controllers out of the box; Windows 7 and older supports Xbox 360 Controllers, but drivers might be required;
-
-The game targets the native Windows x64 environment.
 
 ---
 
