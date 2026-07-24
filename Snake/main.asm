@@ -174,17 +174,6 @@ main PROC
     mov rc.top, 0
     mov rc.right, 600
     mov rc.bottom, 600
-
-    sub rsp, 28h
-
-        lea rcx, rc
-        mov rdx, WS_OVERLAPPEDWINDOW
-        xor r8, r8
-        xor r9, r9
-
-        call AdjustWindowRectEx
-
-    add rsp, 28h
     
     mov rcx, 0
     lea rdx, ClassName

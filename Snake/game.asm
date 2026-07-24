@@ -254,19 +254,8 @@ Game PROC
 
     mov rc.left, 0
     mov rc.top, 0
-    mov rc.right, 600
-    mov rc.bottom, 645
-
-    sub rsp, 28h
-
-        lea rcx, rc
-        mov rdx, WS_OVERLAPPEDWINDOW
-        xor r8, r8
-        xor r9, r9
-
-        call AdjustWindowRectEx
-
-    add rsp, 28h
+    mov rc.right, 606
+    mov rc.bottom, 654
     
     mov rcx, 0
     lea rdx, ClassName
