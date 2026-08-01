@@ -20,7 +20,7 @@ The goal is to explore low-level Windows development, graphics rendering, input 
 | Windows 7 x64 | ✅ Supported |
 | Windows XP x64 | ✅ Supported |
 
-- DirectX June 2010 is required to play the game; From version 1.2 onwards the DirectX will be available as a separate download on the release.
+- DirectX June 2010 is required to play the game; DirectX is available as a separate download on the [releases page](https://github.com/duhsoares21/thesnakegame/releases).
 - Windows 8 and newer officialy supports Xbox One and Xbox Series X|S Controllers; Windows 7 and older officialy supports Xbox 360 Controllers, but drivers might be required;
 
 The game targets the native Windows x64 environment.
@@ -193,37 +193,9 @@ x64 build tools
 
 ## Why Assembly?
 
-This project was created to explore what is possible when building software at a very low level.
+Because I like to suffer, yay! Just kidding. 
 
-Modern game development usually relies on:
-
-- Game engines
-- High-level languages
-- Frameworks
-- Middleware
-
-While those tools are extremely powerful, Assembly provides a unique perspective:
-
-- Direct CPU control
-- Understanding of memory layout
-- Manual calling conventions
-- Native API interaction
-- Minimal executable size
-
-The entire game logic, rendering system, input handling, and window management are implemented manually.
-
----
-
-## Project Goals
-
-This project is not intended to replace modern game engines.
-
-Instead, it is an exploration of:
-
-- How games worked before large engines existed
-- How operating systems expose functionality
-- How high-level features are built from low-level primitives
-- Learning computer architecture through practical development
+Assembly is a passion of mine and I always wanted to learn and do something meaningful with it. So there it is.
 
 ---
 
