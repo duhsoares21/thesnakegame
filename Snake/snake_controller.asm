@@ -19,6 +19,9 @@ EXTERN SnakeY: QWORD
 
 .data
 
+PUBLIC isInputLocked
+isInputLocked QWORD 0
+
 ; =========================================================
 ; CODE
 ; =========================================================
@@ -26,30 +29,43 @@ EXTERN SnakeY: QWORD
 .code 
 
 MoveRight PROC
+    cmp isInputLocked, 1
+    je EndInput
+
     cmp SnakeDirection, SNAKE_LEFT_DIRECTION
     je EndInput
 
     mov SnakeDirection, SNAKE_RIGHT_DIRECTION
     mov SnakeX, SNAKE_MOVEMENT_CELL
     mov SnakeY, 0
+
+    mov isInputLocked, 1
     
     EndInput:
         ret
 MoveRight ENDP
 
 MoveLeft PROC
-cmp SnakeDirection, SNAKE_RIGHT_DIRECTION
+    cmp isInputLocked, 1
+    je EndInput
+
+    cmp SnakeDirection, SNAKE_RIGHT_DIRECTION
     je EndInput
 
     mov SnakeDirection, SNAKE_LEFT_DIRECTION
     mov SnakeX, SNAKE_MOVEMENT_CELL
     mov SnakeY, 0
 
+    mov isInputLocked, 1
+
     EndInput:
         ret
 MoveLeft ENDP
 
 MoveUp PROC
+    cmp isInputLocked, 1
+    je EndInput
+
     cmp SnakeDirection, SNAKE_DOWN_DIRECTION
     je EndInput
 
@@ -57,17 +73,24 @@ MoveUp PROC
     mov SnakeX, 0
     mov SnakeY, SNAKE_MOVEMENT_CELL
 
+    mov isInputLocked, 1
+
     EndInput:
         ret
 MoveUp ENDP
 
 MoveDown PROC
+    cmp isInputLocked, 1
+    je EndInput
+
     cmp SnakeDirection, SNAKE_UP_DIRECTION
     je EndInput
 
     mov SnakeDirection, SNAKE_DOWN_DIRECTION
     mov SnakeX, 0
     mov SnakeY, SNAKE_MOVEMENT_CELL
+
+    mov isInputLocked, 1
 
     EndInput:
         ret

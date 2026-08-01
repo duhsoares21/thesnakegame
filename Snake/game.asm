@@ -457,11 +457,6 @@ WndProc PROC
             mov elapsedTime, 0  
         add rsp, 28h
 
-        ;sub rsp, 28h
-            ;call HandleGameState
-            ;mov elapsedTime, 0
-        ;add rsp, 28h
-
         Continue:
             xor rax, rax
             ret

@@ -16,6 +16,8 @@ EXTERN SpawnFood: PROC
 EXTERN DrawRectangle: PROC
 EXTERN GetSnakeState: PROC
 
+EXTERN isInputLocked: QWORD
+
 EXTERN ClientRect: RECT
 
 .data
@@ -229,6 +231,8 @@ LoopSnake:
     jmp LoopSnake
 
 Finish:
+
+    mov isInputLocked, 0
 
     pop r15
     pop r14
