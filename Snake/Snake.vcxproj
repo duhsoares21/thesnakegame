@@ -118,7 +118,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EntryPointSymbol>main</EntryPointSymbol>
       <LargeAddressAware>false</LargeAddressAware>
-      <AdditionalOptions>/SUBSYSTEM:WINDOWS,5.02 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/SUBSYSTEM:WINDOWS,6.00 %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <Manifest>
       <EnableSegmentHeap>true</EnableSegmentHeap>
@@ -139,7 +139,7 @@
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <LargeAddressAware>false</LargeAddressAware>
       <EntryPointSymbol>main</EntryPointSymbol>
-      <AdditionalOptions>/SUBSYSTEM:WINDOWS,5.02</AdditionalOptions>
+      <AdditionalOptions>/SUBSYSTEM:WINDOWS,6.00</AdditionalOptions>
       <AdditionalDependencies>C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Lib\x64\XInput.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Manifest>

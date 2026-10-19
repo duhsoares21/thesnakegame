@@ -49,6 +49,9 @@ SnakeDirection QWORD SNAKE_DEFAULT_DIRECTION
 PUBLIC SnakeTileSize
 SnakeTileSize DWORD SNAKE_TILE_SIZE
 
+PUBLIC SnakeRenderSize
+SnakeRenderSize DWORD SNAKE_RENDER_SIZE
+
 PUBLIC SnakeX
 SnakeX QWORD SNAKE_MOVEMENT_CELL
 
@@ -262,17 +265,20 @@ DrawSnake PROC
     mov r10, rcx ;hDeviceContext
           
     mov rax, snakeCounter
-    and rax, 1
+    cmp snakeCounter, 0
 
-    test rax, rax
-    jz DarkColor
+    jg DarkColor
+    ;and rax, 1
+
+    ;test rax, rax
+    ;jz DarkColor
 
     LightColor:
-        mov r9d, 0077ff00h
+        mov r9d, 004AF0C8h
         jmp DrawRect
 
     DarkColor:
-        mov r9d, 0000bb00h
+        mov r9d, 0055B19Bh
         
     DrawRect:
         mov r11, snakeCounter
@@ -282,8 +288,10 @@ DrawSnake PROC
 
         mov rcx, r10
         mov rdx, [rax].SNAKESEGMENT.X
+        inc rdx
         mov r8, [rax].SNAKESEGMENT.Y
         add r8, HUD_AREA
+        inc r8
 
         sub rsp, 28h
             call DrawRectangle

@@ -20,6 +20,9 @@ INCLUDE render_data.inc
 
 EXTERN CreateCompatibleDC: PROC
 EXTERN CreateCompatibleBitmap: PROC
+EXTERN CreatePen: PROC
+EXTERN MoveToEx: PROC
+EXTERN LineTo: PROC
 EXTERN SelectObject: PROC
 EXTERN DeleteDC: PROC
 EXTERN DeleteObject: PROC
@@ -32,6 +35,7 @@ EXTERN GetDC: PROC
 EXTERN ReleaseDC: PROC
 
 EXTERN SnakeTileSize: DWORD
+EXTERN SnakeRenderSize: DWORD
 
 
 ;========================================
@@ -233,13 +237,13 @@ DrawRectangle PROC
     mov eax,edx
     mov Rectangle.left,eax
 
-    add eax,SnakeTileSize
+    add eax,SnakeRenderSize
     mov Rectangle.right,eax
 
     mov eax,r8d
     mov Rectangle.top,eax
 
-    add eax,SnakeTileSize
+    add eax,SnakeRenderSize
     mov Rectangle.bottom,eax
 
     mov ecx,r9d
@@ -346,5 +350,115 @@ FillRectangle PROC
     ret
 
 FillRectangle ENDP
+
+;=========================================================
+; DrawGrid
+;
+; RCX = HDC
+; RDX = Window Width
+; R8  = Window Height
+; 
+; 
+;=========================================================
+DrawGrid PROC
+    LOCAL hPen: QWORD
+    LOCAL oldPen: QWORD
+    LOCAL hDeviceContext: HDC
+    LOCAL grid_x: DWORD
+    LOCAL grid_y: DWORD
+    LOCAL grid_size_x: DWORD
+    LOCAL grid_size_y: DWORD
+    LOCAL window_width: DWORD
+    LOCAL window_height: DWORD
+
+    mov hDeviceContext, rcx
+    mov window_width, edx
+    mov window_height, r8d
+    
+    mov eax, SnakeTileSize
+    mov grid_size_x, eax
+
+    mov eax, SnakeTileSize
+    mov grid_size_y, eax
+
+    sub rsp, 28h
+        mov  ecx, 0
+        mov  edx, 1
+        mov  r8d, 00253F1Fh
+        call CreatePen
+        mov  hPen, rax
+    add rsp, 28h
+
+
+    sub rsp, 28h
+        mov  rcx, hDeviceContext
+        mov  rdx, hPen
+        call SelectObject
+        mov  oldPen, rax
+    add rsp, 28h
+
+    mov eax, grid_size_x
+    mov grid_x, eax
+
+    mov eax, grid_size_y
+    add eax, 45
+    mov grid_y, eax
+
+    draw_vertical_lines:
+        mov eax, window_width
+
+        cmp grid_x, eax
+        jge draw_horizontal_lines
+
+        sub rsp, 28h
+            mov rcx, hDeviceContext
+            mov edx, grid_x
+            mov r8d, 45
+            xor r9d, r9d
+            call MoveToEx
+        add rsp, 28h
+
+        sub rsp, 28h
+            mov rcx, hDeviceContext
+            mov edx, grid_x
+            mov r8d, window_height
+            call LineTo
+        add rsp, 28h
+
+        mov eax, SnakeTileSize
+        add grid_x, eax
+
+        jmp draw_vertical_lines
+
+    draw_horizontal_lines:
+        mov eax, window_height
+
+        cmp grid_y, eax
+        jge done
+
+        sub rsp, 28h
+            mov rcx, hDeviceContext
+            mov edx, 0
+            mov r8d, grid_y
+            xor r9d, r9d
+            call MoveToEx
+        add rsp, 28h
+        
+        sub rsp, 28h
+            mov rcx, hDeviceContext
+            mov edx, window_width
+            mov r8d, grid_y
+            call LineTo
+        add rsp, 28h
+
+        mov eax, SnakeTileSize
+        add grid_y, eax
+        jmp draw_horizontal_lines
+
+    done:
+
+    ret
+
+DrawGrid ENDP
 
 END

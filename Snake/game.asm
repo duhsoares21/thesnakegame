@@ -50,6 +50,7 @@ EXTERN HandleSnakeState: PROC
 EXTERN DrawSnake: PROC
 EXTERN DrawRectangle: PROC
 EXTERN FillRectangle: PROC
+EXTERN DrawGrid: PROC
 
 EXTERN HandleInput: PROC
 EXTERN SetGameState: PROC
@@ -254,8 +255,8 @@ Game PROC
 
     mov rc.left, 0
     mov rc.top, 0
-    mov rc.right, 606
-    mov rc.bottom, 654
+    mov rc.right, 600
+    mov rc.bottom, 645
     
     mov rcx, 0
     lea rdx, ClassName
@@ -495,10 +496,17 @@ WndProc PROC
 
             mov rcx, hDeviceContext
             lea rdx, ScreenRectangle
-            mov r8d, 00FFFFFFh  ; Color
+            mov r8d, 00101D0Dh ;Color
 
             call FillRectangle
 
+        add rsp, 28h
+
+        sub rsp, 28h
+            mov rcx, hDeviceContext
+            mov rdx, 600
+            mov r8d, 645
+            call DrawGrid            
         add rsp, 28h
 
         sub rsp, 28h

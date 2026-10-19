@@ -3,6 +3,7 @@
 ;===============================
 
 SNAKE_TILE_SIZE				equ 20
+SNAKE_RENDER_SIZE			equ 18
 SNAKE_MOVEMENT_CELL			equ 20
 SNAKE_INITIAL_SIZE			equ 5
 SNAKE_INITIAL_LIVES			equ 3

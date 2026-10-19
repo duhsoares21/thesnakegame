@@ -188,7 +188,10 @@ DrawFood PROC
 	mov rdx, SpawnPointX
     mov r8, SpawnPointY
     add r8, HUD_AREA
-    mov r9, 0000ddffh
+    mov r9, 00DBA43Eh
+
+	inc rdx
+	inc r8
 
 	sub rsp, 28h
 		call DrawRectangle
