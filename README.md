@@ -36,8 +36,8 @@ This is a modern implementation of the classic Snake game.
 ### Main Menu
 <img width="600" height="630" alt="20260720-0517-04 5567350" src="https://github.com/user-attachments/assets/e2087251-789c-4a74-b0c2-659702706310" />
 
-### Gameplay
-<img width="602" height="682" alt="20260720-0519-29 0391815" src="https://github.com/user-attachments/assets/bca193dc-9333-4e3d-bc29-b4010507c1c0" />
+### In Game
+<img width="590" height="642" alt="image" src="https://github.com/user-attachments/assets/6e653b1e-5c9d-4ba3-b2a8-9a2350e9f197" />
 
 Features:
 
